@@ -98,17 +98,18 @@ conn = make_connection()
 
 エラーが発生しなければ，接続に成功しているはずである。
 
-次に，SQL 文を実行し，その結果を出力させる。
+### SQL 文を実行する
 
-以下は，ユーザーがアクセス可能なテーブルの一覧を表示する例である。
+次に，SQL 文を実行し，その結果を出力させる。
+Jupyter のコードセルに以下を入力し，実行すれば結果が表示される。
+これは，ユーザーがアクセス可能なテーブルの一覧を表示する例である。
 
 ```
-def list_tables():
-    sql = '''\
+sql = '''\
 SELECT owner, table_name
 FROM all_tables
 ORDER BY owner, table_name
 '''
-    df = pd.read_sql_query(sql, make_connection())
-    return df
+df = pd.read_sql_query(sql, make_connection())
+df
 ```
