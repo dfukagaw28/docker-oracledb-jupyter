@@ -64,16 +64,21 @@ Jupyter Notebook サーバにアクセスするには，Web ブラウザを開�
 ```
 import cx_Oracle
 import pandas as pd
+import getpass
 
-DBUSER = 'XXXXXXXX'
-DBDSN = 'XXXXXXXX'
-DBPASS = input('DBPASS: ')
+ORACLE_USER = 'XXXXXXXX'
+ORACLE_HOST = 'XXXXXXXX'
+ORACLE_PORT = '1521'
+ORACLE_SID = 'XXXXXXXX'
+
+ORACLE_PASSWORD = getpass.getpass('DBPASS: ')
 
 def make_connection():
+    dsn = cx_Oracle.makedsn(ORACLE_HOST, ORACLE_PORT, ORACLE_SID)
     connection = cx_Oracle.connect(
-        user=DBUSER,
-        password=DBPASS,
-        dsn=DBDSN,
+        user=ORACLE_USER,
+        password=ORACLE_PASSWORD,
+        dsn=dsn,
         encoding='UTF8',
         nencoding='UTF8',
     )
@@ -83,8 +88,10 @@ def make_connection():
 パラメータの値は，たとえば以下のようにする（実際の値は，サーバ管理者から提供された情報を用いる）。
 
 ```
-DBUSER = 'salesadmin'
-DBDSN = 'dbhost.example.com:1522/sales.example.com'
+ORACLE_USER = 'salesadmin'
+ORACLE_HOST = 'dbhost.example.com'
+ORACLE_PORT = '1521'
+ORACLE_SID = 'orcl'
 ```
 
 パスワード `DBPASS` の値は，上のコードを実行する際に入力を促される。
