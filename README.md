@@ -58,7 +58,8 @@ Jupyter Notebook サーバにアクセスするには，Web ブラウザを開�
 
 サーバへの接続情報は漏洩のないよう厳重に管理すること。
 
-まず，Jupyter Notebook にて以下のコードを実行する。
+次に，Jupyter Notebook にて以下のコードを実行する。
+ただし，パラメータ `DBUSER`, `DBDSN` は適宜変更すること。
 
 ```
 import cx_Oracle
@@ -77,7 +78,31 @@ def make_connection():
         nencoding='UTF8',
     )
     return connection
+```
 
+パラメータの値は，たとえば以下のようにする（実際の値は，サーバ管理者から提供された情報を用いる）。
+
+```
+DBUSER = 'salesadmin'
+DBDSN = 'dbhost.example.com:1522/sales.example.com'
+```
+
+パスワード `DBPASS` の値は，上のコードを実行する際に入力を促される。
+`DBPASS` の値もコードに埋め込むことは可能であり，そちらの方が便利ではあるが，ノートブック（ipynb）に平文のまま保存されるためノートブックの管理を厳重におこなう必要がある。
+
+最後に，コードセルに以下を入力する。
+
+```
+conn = make_connection()
+```
+
+エラーが発生しなければ，接続に成功しているはずである。
+
+次に，SQL 文を実行し，その結果を出力させる。
+
+以下は，ユーザーがアクセス可能なテーブルの一覧を表示する例である。
+
+```
 def list_tables():
     sql = '''\
 SELECT owner, table_name
@@ -87,15 +112,3 @@ ORDER BY owner, table_name
     df = pd.read_sql_query(sql, make_connection())
     return df
 ```
-
-ただし，パラメータ `DBUSER`, `DBDSN` は適宜変更すること。
-
-たとえば以下のようにする（実際の値は，サーバ管理者から提供された情報を用いる）。
-
-```
-DBUSER = 'salesadmin'
-DBDSN = 'dbhost.example.com:1522/sales.example.com'
-```
-
-パスワード `DBPASS` の値は，上のコードを実行する際に入力を促される。
-`DBPASS` の値もコードに埋め込むことは可能であり，そちらの方が便利ではあるが，ノートブック（ipynb）に平文のまま保存されるためノートブックの管理を厳重におこなう必要がある。
