@@ -61,7 +61,7 @@ Jupyter Notebook サーバにアクセスするには，Web ブラウザを開�
 次に，Jupyter Notebook にて以下のコードを実行する。
 ただし，パラメータ `DBUSER`, `DBDSN` は適宜変更すること。
 
-```
+```py
 import cx_Oracle
 import pandas as pd
 import getpass
@@ -87,7 +87,7 @@ def make_connection():
 
 パラメータの値は，たとえば以下のようにする（実際の値は，サーバ管理者から提供された情報を用いる）。
 
-```
+```py
 ORACLE_USER = 'salesadmin'
 ORACLE_HOST = 'dbhost.example.com'
 ORACLE_PORT = '1521'
@@ -99,7 +99,7 @@ ORACLE_SID = 'orcl'
 
 最後に，コードセルに以下を入力する。
 
-```
+```py
 conn = make_connection()
 ```
 
@@ -111,7 +111,7 @@ conn = make_connection()
 Jupyter のコードセルに以下を入力し，実行すれば結果が表示される。
 これは，ユーザーがアクセス可能なテーブルの一覧を表示する例である。
 
-```
+```py
 sql = '''\
 SELECT owner, table_name
 FROM all_tables
